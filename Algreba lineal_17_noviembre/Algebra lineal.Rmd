@@ -1,0 +1,540 @@
+---
+title: "Algebra lineal"
+author: "María Guzmán Martínez"
+date: "2025-11-17"
+output:
+  pdf_document: 
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+  html_document: 
+    number_sections: yes
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    code_folding: show
+toc: yes
+header-includes:
+- \usepackage{graphicx}
+- \usepackage{fancyhdr}
+- \usepackage{amsmath, amsthm, amssymb}  # para escribir ecuaciones
+link-citations: yes
+linkcolor: blue       # Marca los link en color azul
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = FALSE, message = FALSE, warning = FALSE)
+```
+
+# Vectores
+Dado un conjunto de valores, se puede definir un vector, de la siguiente manera:
+
+
+Si
+$$
+\boldsymbol{x}=
+\left( 
+\begin{array}{c}
+x_{1}  \\ 
+\vdots  \\
+x_{n}\\ 
+\end{array}
+\right) 
+$$
+o también como 
+
+$$
+\boldsymbol{x}´=(x_1,...,x_n)
+$$
+La multiplicación de un escalar por un vector, está dado por
+$$
+c\boldsymbol{x}=
+\left( 
+\begin{array}{c}
+cx_{1}  \\ 
+\vdots  \\
+cx_{n}\\ 
+\end{array}
+\right) 
+$$
+
+## Suma
+
+La operación de suma entre vectores está dada por
+$$
+\boldsymbol{x}+\boldsymbol{y}=
+\left( 
+\begin{array}{c}
+x_{1}  \\ 
+\vdots  \\
+x_{n}\\ 
+\end{array}
+\right) +
+\left( 
+\begin{array}{c}
+y_{1}  \\ 
+\vdots  \\
+y_{n}\\ 
+\end{array}
+\right)=
+\left( 
+\begin{array}{c}
+x_1+y_{1}  \\ 
+\vdots  \\
+x_n+y_{n}\\ 
+\end{array}
+\right)
+$$
+
+Operaciones con vectores:
+
+- Suma de dos vectores de la misma longitud: 
+$$
+\quad \mathbf{x} + \mathbf{y} = \mathbf{y} + \mathbf{x} 
+$$
+
+- Multiplicación por un escalar 
+$$
+\quad c(\mathbf{x} + \mathbf{y}) = c\mathbf{x} + c\mathbf{y}
+$$ 
+  
+- Distributiva de la suma de escalares: 
+$$
+(c_1 + c_2)\mathbf{x} = c_1\mathbf{x} + c_2\mathbf{x}
+$$ 
+  
+
+  
+
+
+## Multiplicación
+
+
+La multiplicación de dos vectores de dimensión $n$ está dada por
+
+$$
+\boldsymbol{x}'\boldsymbol{y}=x_1\times y_1+\cdots+ x_n\times y_n=\sum_{i=1}^n x_i\times y_i
+$$
+A $\boldsymbol{x}'\boldsymbol{y}$ se le conoce también como producto punto, producto interno o producto escalar.
+
+- Producto punto: 
+$$
+\mathbf{x} \cdot \mathbf{y} = \sum_{i=1}^{n} x_iy_i 
+$$
+
+Sean $\mathbf{x}$, $\mathbf{y}$ y $\mathbf{z}$ tres vectores de dimensión $n$ y sea $c$ un escalar. Entonces:
+
+
+- Multiplicación con un vector de ceros
+$$ 
+\mathbf{x} \cdot \mathbf{0} = 0 
+$$
+
+- Ley conmutativa del producto escalar
+$$ 
+\mathbf{x} \cdot \mathbf{y} = \mathbf{y} \cdot \mathbf{x} 
+$$
+
+- Ley distributiva del producto escalar
+$$
+\mathbf{x} \cdot (\mathbf{y} + \mathbf{z}) = \mathbf{x} \cdot \mathbf{y} + \mathbf{x} \cdot 
+\mathbf{z} 
+$$ 
+
+- Multiplicación de un escalar y dos vectores
+$$
+(c \cdot \mathbf{x}) \cdot \mathbf{y} = c \cdot (\mathbf{x} \cdot \mathbf{y})
+$$
+Observe que no existe una ley asociativa para el producto escalar. La expresión 
+$$
+(x\cdot y) \cdot z =x\cdot(y\cdot z)
+$$
+no tiene sentido porque ninguno de los dos lados de la ecuación está definido. 
+
+## Normas
+
+La longitud de un vector $\boldsymbol{x}$, se define como
+$$
+L_x=\sqrt{x_1^2+\cdots+x_n^2}
+$$
+Es decir
+$$
+L_x=\sqrt{\boldsymbol{x}'\boldsymbol{x}}
+$$
+La longitud de un vector, también se le conoce como  norma o módulo de un vector: 
+$$ 
+\|\mathbf{x}\| = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}
+$$ 
+
+La norma de un vector es una medida de su longitud o magnitud en un espacio vectorial. En términos generales, la norma de un vector $\mathbf{x}$ se define como una función que asigna a cada vector un número no negativo. La norma de $\mathbf{x}$, denotada como $\|\mathbf{x}\|$, cumple con las siguientes propiedades:
+
+
+- No negatividad: $\|\mathbf{x}\| \geq 0$, y $\|\mathbf{x}\| = 0$ si y solo si 
+$$
+\mathbf{x} = \mathbf{0}
+$$
+el vector cero.
+
+- Homogeneidad positiva: Para todo escalar $c$,
+$$
+\|c\mathbf{x}\| = |c | \|\mathbf{x}\|
+$$.
+
+- Desigualdad triangular: Para cualquier par de vectores $\mathbf{x}$ y $\mathbf{y}$, 
+$$
+\|\mathbf{x} + \mathbf{y}\| \leq \|\mathbf{x}\| + \|\mathbf{y}\|
+$$
+
+
+Estas propiedades aseguran que la norma de un vector cumple con las propiedades básicas de una medida de distancia o magnitud en un espacio vectorial.
+La norma de un vector 
+$$
+\mathbf{x} = \begin{pmatrix} x_1 \\ x_2 \\\vdots\\ x_n \end{pmatrix}
+$$
+está  dada por 
+
+$$
+\quad \|\mathbf{x}\| = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}
+$$
+
+## Combinacione lineales
+
+Dado un conjunto de $k$ vectores, $\boldsymbol{x_1},\ldots,\boldsymbol{x_k}$, se dice que son linealmente independientes si existen constantes, $\boldsymbol{c_1},\ldots,\boldsymbol{c_k}$ no todas cero, tal que 
+$$
+c_1\boldsymbol{x}_1+c_2\boldsymbol{x}_2+\cdots+c_k\boldsymbol{x}_k= \mathbf{0}
+$$
+La dependencia lineal implica que al menos un vector del conjunto puede ser escrito como una combinación lineal de los otros vectores.
+
+Propiedades: 
+
+
+
+- Vectores son  perpendiculares (ortogonales) que se escribe como $\mathbf{x} \perp \mathbf{y}$, si
+$$
+\mathbf{x}' \mathbf{y} = 0
+$$
+Note que cuando dos vectores son perpendiculares, entonces formaran ángulos de 90 o 270 grados. De hecho si dos vectores son perpendiculares, entonces serán linealmente independientes.
+
+## Actividad 1
+
+Dados los vectores $\boldsymbol{x}=c(1,3,5,7,9)$ y $\boldsymbol{x}=c(2,4,6,8,10)$
+
+- Calcular la suma
+
+- Multiplicarlo por el escalar $c=10$
+
+- Calcular el la longitud de cada vector
+
+- Multiplicar ambos vectores
+
+
+Funciones en R:
+
+- Concatena valores: *c()*
+
+```{r}
+
+```
+
+
+# Matrices
+
+Una matriz es un arreglo de dimensión $n\times p$ de números reales, si se puede escribir como
+
+$$
+\mathbf{X}_{n\times p} =\left( 
+\begin{array}{cccc}
+x_{11} & x_{12} & \cdots  & x_{1p} \\ 
+x_{21} & x_{22} & \cdots  & x_{2p} \\ 
+\vdots  & \vdots  & \ddots  & \vdots  \\ 
+x_{n1} & x_{n2} & \cdots  & x_{np}
+\end{array}
+\right)
+$$
+esta matriz $\boldsymbol{X}$ tiene $n$ renglones (líneas horizontales) y $p$ columnas (líneas verticales).
+
+## Suma
+
+Si $\boldsymbol{A} = \{a_{ij}\}$ y $\boldsymbol{B} = \{b_{ij}\}$ son matrices de dimensiones $m\times n$, entonces la suma es la matriz de $\boldsymbol{A}$ y $\boldsymbol{B}$, está dada por $\boldsymbol{A}+\boldsymbol{B}$.  
+
+Es decir, 
+
+$$
+\underset{m \times n}{\boldsymbol{A}+\boldsymbol{B}}=\begin{bmatrix}
+    a_{11}+b_{11} & a_{12}+b_{12} & a_{13}+b_{13} & \dots & a_{1n}+b_{1n} \\
+    a_{21}+b_{21} & a_{22}+b_{22} & a_{23}+b_{23} & \dots & a_{2n}+b_{2n} \\
+    a_{31}+b_{31} & a_{32}+b_{32} & a_{33}+b_{33} & \dots & a_{3n}+b_{3n} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    a_{m1}+b_{m1} & a_{m2}+b_{m2} & a_{m3}+b_{m3} & \dots & a_{mn}+b_{mn} \\
+  \end{bmatrix}
+$$
+
+
+Propiedades: Dadas $\boldsymbol{A}$, $\boldsymbol{B}$ y $\boldsymbol{C}$ matrices del mismo tamaño, se tiene
+
+- Conmutativa: 
+$$
+\boldsymbol{A} + \boldsymbol{B} = \boldsymbol{B} + \boldsymbol{A} 
+$$
+
+- Asociativa: 
+$$(\boldsymbol{A} + \boldsymbol{B}) + \boldsymbol{C} = \boldsymbol{A} + (\boldsymbol{B} + \boldsymbol{C})
+$$
+   
+- Elemento neutro: Existe una matriz $\boldsymbol{0}$ llamada matriz nula tal que 
+$$
+\boldsymbol{A} + \boldsymbol{0} = \boldsymbol{A}
+$$
+
+    
+- Elemento opuesto: Para cada matriz $\boldsymbol{A}$, existe una matriz $\boldsymbol{-A}$ tal que 
+$$
+\boldsymbol{A} + (\boldsymbol{-A}) = \boldsymbol{0}
+$$
+- Para dos constantes dadas $c_1$ y $c_2$, se tiene
+$$
+(c_1+c_2)\boldsymbol{A} = c_1\boldsymbol{A}+c_2\boldsymbol{A}
+$$
+
+
+## Producto
+
+Dado $\boldsymbol{A}$ una matriz de $n\times k$, y $\boldsymbol{B}$ una matriz
+de $k\times m$. El producto de las matrices  denotado $\boldsymbol{AB}$, es la matriz de $n\times m$ cuyos elementos están dados por
+$$
+c_{ij} = \sum_{l=1}^{k}a_{il}b_{lj}
+$$
+para $i=1,...,m$ y $j=1,...,k$. 
+
+
+
+Esta definición significa que el elemento en el $i$-ésimo renglón y en la $j$-ésima columna del producto $\boldsymbol{AB}$ se obtiene al multiplicar los elementos del $i$-ésimo renglón de $\boldsymbol{A}$ por los elementos correspondientes de la $j$-ésima columna de $\boldsymbol{B}$ y
+luego sumar los elementos de esta multiplicación, es decir, si$\boldsymbol{A}$ y $\boldsymbol{B}$  son dos matrices de dimensión $n\times k$ y $k\times m$ respectivamente  como se muestran a continuación:
+
+$$
+\underset{n \times k}{\boldsymbol{A}} =
+\begin{bmatrix}
+    a_{11} & a_{12} & \dots & a_{1k} \\
+    a_{21} & a_{22} & \dots & a_{2k} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{n1} & a_{n2} & \dots & a_{nk} \\
+\end{bmatrix}
+$$
+$$
+\underset{k \times m}{\boldsymbol{B}} =
+\begin{bmatrix}
+    b_{11} & b_{12} & \dots & b_{1m} \\
+    b_{21} & b_{22} & \dots & b_{2m} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    b_{k1} & b_{k2} & \dots & b_{km} \\
+\end{bmatrix}
+$$
+$$
+\underset{n \times m}{\boldsymbol{AB}} =
+\begin{bmatrix}
+    c_{11} & c_{12} & \dots & c_{1m} \\
+    c_{21} & c_{22} & \dots & c_{2m} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    c_{n1} & c_{n2} & \dots & c_{nm} \\
+\end{bmatrix}
+$$
+
+donde 
+ $$
+\begin{aligned}
+c_{ij} & = a_{i1}b_{1j} + a_{i2}b_{2j} + a_{i3}b_{3j} + \dots + a_{ik}b_{kj} \\
+       & = \sum_{l=1}^{k} a_{il}b_{lj}
+\end{aligned}
+$$
+Propiedades: Para matrices conformables 
+
+- Asociativa: 
+$$
+(\boldsymbol{A B})  \boldsymbol{C} =\boldsymbol{ A} (\boldsymbol{BC})
+$$ 
+
+- Distributiva: 
+$$
+\boldsymbol{A}(\boldsymbol{B + C}) = \boldsymbol{AB} +\boldsymbol{A} \boldsymbol{ C}
+$$ 
+
+$$
+(\boldsymbol{A} + \boldsymbol{B}) \cdot \boldsymbol{C} = \boldsymbol{AC} + \boldsymbol{BC}
+$$
+
+
+- Producto por el elemento identidad: 
+$$
+\boldsymbol{IA} = \boldsymbol{AI} = \boldsymbol{A}
+$$
+donde $\boldsymbol{I}$ es la matriz identidad.
+
+- No conmutativa: En general, 
+$$
+\boldsymbol{A}  \boldsymbol{B} \neq \boldsymbol{B}  \boldsymbol{A}
+$$ para matrices $\boldsymbol{A}$ y $\boldsymbol{B}$ de diferentes dimensiones.
+
+- Propiedad escalable: $c$ es un escalar
+$$(c\boldsymbol{A}) \cdot \boldsymbol{B} = \boldsymbol{A} \cdot (c\boldsymbol{B}) = c(\boldsymbol{A} \cdot \boldsymbol{B})
+$$ 
+
+## Transpuesta
+
+Sea $\boldsymbol{A}=\left(a_{i j}\right)$ una matriz de $m \times n$. Entonces la transpuesta de $\boldsymbol{A}$, que se escribe $\boldsymbol{A}^{\top}$, es la matriz de $n \times m$ que se obtiene al intercambiar los renglones por las columnas de $\boldsymbol{A}$. De manera breve, se puede escribir $\boldsymbol{A}^{t}=\left(a_{j i}\right)$. En otras palabras
+$$
+\boldsymbol{A}=\left(\begin{array}{cccc}
+a_{11} & a_{12} & \cdots & a_{1 n} \\
+a_{21} & a_{22} & \cdots & a_{2 n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m 1} & a_{m 2} & \cdots & a_{m n}
+\end{array}\right)
+$$
+entonces
+$$
+ \boldsymbol{A}^{t}=\left(\begin{array}{cccc}
+a_{11} & a_{21} & \cdots & a_{m 1} \\
+a_{12} & a_{22} & \cdots & a_{m 2} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{1 n} & a_{2 n} & \cdots & a_{n n}
+\end{array}\right)
+$$
+
+Simplemente se coloca el renglón $i$ de $\boldsymbol{A}$ como la columna $i$ de $\boldsymbol{A}^{\top}$ y la columna $j$ de $\boldsymbol{A}$ como el renglón $j$ de $\boldsymbol{A}^{\top}$.
+
+
+
+Propiedades
+
+Dadas $\boldsymbol{A}$ y $\boldsymbol{B}$ matrices 
+
+- 
+$$
+(\boldsymbol{A}+\boldsymbol{B})'=\boldsymbol{A}'+\boldsymbol{B}' 
+$$
+
+- 
+$$
+(\boldsymbol{A}\boldsymbol{B})'=\boldsymbol{B}'\boldsymbol{A}'
+$$
+
+-
+$$
+(c\boldsymbol{A})'=c\boldsymbol{A}'
+$$
+
+- Una matriz cuadrada es simétrica si
+$$
+\boldsymbol{A} = \boldsymbol{A}'
+$$
+
+
+## Determinante 
+
+El determinante de una matriz cuadrada de $n\times n$, denotado por $|\boldsymbol{A}|$; desarrollo por la fila $i$ de la matriz $\boldsymbol{A}$ de dimensión $n$ :
+$$
+|\boldsymbol{A}|=\text{det}(\boldsymbol{A})=\sum_{j=1}^n a_{ij}|\boldsymbol{A}_{ij}|(-1)^{i+j}
+$$
+donde $\boldsymbol{A}_{ij}$ es la matriz de dimensión $n-1$ resultante de eliminar la fila $i$ y la columna $j$ de $\boldsymbol{A}$.
+Por tanto, si la matriz es dimensión $n$, se calculan $n$ determinantes de matrices de dimensión $n-1$
+
+Propiedades: Si $\boldsymbol{A}$ y $\boldsymbol{B}$ son dos matrices cuadradas de $n\times n$
+
+- 
+$$
+|A|=|A'|
+$$
+- Si $\boldsymbol{A}$ tiene un renglón o columna de ceros, entonces
+$$
+|A|=0
+$$
+
+- Si $\boldsymbol{A}$ tiene dos renglones o columnas iguales, entonces
+$$
+|A|=0
+$$
+
+- Determinante de un producto
+$$
+|AB|=|A||B|
+$$
+- Dado un escalar $c$, se tiene
+$$
+|cA|=c^n|B|
+$$
+
+## Inversa
+
+La matriz identidad $\boldsymbol{I}_n$ de $n\times n$ es una matriz cuyos elementos en la diagonal principal son iguales a $1$ y todos los demás son $0$. Es decir,
+$$ 
+\boldsymbol{I}_n = (b_{ij})
+$$
+donde $b_{ij} = \begin{cases} 1 & \text{si } i = j \\ 0 & \text{si } i \neq j \end{cases}$  
+
+
+Sean $\boldsymbol{A}$ y $\boldsymbol{B}$ dos matrices de $n \times n$. Suponga que $\boldsymbol{AB} = \boldsymbol{BA} = \boldsymbol{I}$. Entonces $\boldsymbol{B}$ se llama la inversa de $\boldsymbol{A}$ y se denota por $\boldsymbol{A}^{-1}$. Entonces se tiene 
+$$
+\boldsymbol{AA}^{-1} = \boldsymbol{A}^{-1}\boldsymbol{A} = \boldsymbol{I}
+$$ 
+Si $\boldsymbol{A}$ tiene inversa, entonces se dice que $\boldsymbol{A}$ es invertible.   
+
+- Una matriz cuadrada que no es invertible se le denomina singular.
+
+- Una matriz invertible se llama no singular.
+
+Sean $\boldsymbol{A}$ una matriz cuadrada de tamaño $n \times n$. La matriz inversa de $A$, denotada como $\boldsymbol{A}^{-1}$, se calcula utilizando la fórmula:
+
+$$
+\boldsymbol{A}^{-1} = \frac{1}{{\text{det}(\boldsymbol{A})}} \cdot \text{adj}(\boldsymbol{A})
+$$
+
+donde $\text{det}(\boldsymbol{A})$ es el determinante de la matriz $\boldsymbol{A}$ y $\text{adj}(\boldsymbol{A})$ es la matriz adjunta de $\boldsymbol{A}$.
+
+Propiedades:  Dado $\boldsymbol{A}$ y $\boldsymbol{B}$ matrices cuadradas de $k\times k$, para las cuales existe su inversa, entonces
+
+- 
+$$
+(A^{-1})'=(A')^{-1}
+$$
+
+-
+$$
+(AB)^{-1}=B^{-1}A^{-1}
+$$
+
+
+
+
+## Traza de una matriz
+
+
+ La traza de una matriz cuadrada $\boldsymbol{A} = \{ a_{ij} \}$ de $k \times k$, escrita como $\text{tr}(\boldsymbol{A})$, es la suma de los elementos diagonal; es decir, 
+$$
+\text{tr}(\boldsymbol{A}) = \sum_{i=1}^{k} a_{ii}
+$$.   
+
+Sea $\boldsymbol{A}$ y $\boldsymbol{B}$ matrices $k \times k$ y $c$ un escalar.
+
+- $$\text{tr}(c\boldsymbol{A}) = c \text{tr}(\boldsymbol{A})$$
+ 
+- $$\text{tr}(\boldsymbol{A} \pm \boldsymbol{B}) = \text{tr}(\boldsymbol{A}) \pm \text{tr}(\boldsymbol{B})$$
+
+- $$\text{tr}(\boldsymbol{AB}) = \text{tr}(\boldsymbol{BA})$$
+
+- $$\text{tr}(\boldsymbol{B^{-1}AB}) = \text{tr}(\boldsymbol{A})$$
+
+- $$\text{tr}(\boldsymbol{AA}')= \sum_{i=1}^{k} \sum_{j=1}^{k} a^2_{ij}$$
+
+
+
+## Actividad 2
+
+Funciones en R:
+
+- Traza: *trace()*
+
+- Producto de matrices %*%
+
+- Determinante de una matriz *det()*
+
+- Inversa de una matriz *solve()*
+
