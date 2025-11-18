@@ -1,0 +1,135 @@
+---
+title: "Practica_Derivadas"
+output: html_document
+date: "2025-11-18"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Librerias
+```{r}
+#install.packages("Deriv")
+#install.packages("rootSolve")
+library(Deriv)
+```
+
+$$f(x)=x^2$$
+
+```{r}
+# Primera derivada 
+
+f<-function(x){x^2}
+f_p<-Deriv(f)
+f_p
+ 
+# Evaluar la derivada en un punto, por ejemplo x = 2
+f_p(2)
+
+# Segunda derivada
+
+f_pp<-Deriv(f,n=2)
+f_pp
+```
+
+# Calcular la primera derivada y segunda derivada
+
+$$exp(x)+(2.5)^xsin(2\pi x)-10$$
+
+# Colocando una línea tangent en un gráfico
+
+```{r}
+f<-function(x){0.1*(x^3/3+x^2-15*x)-4}
+f_p<-Deriv(f)
+f_tan<-function(a,x){f_p(a)*(x-a)+f(a)}
+par(mar=c(4,5,1,1))
+curve(f,-10,10,lwd=2, ylab=expression(f(x)==0.1*(x^3/3+x^2-15*x)-4))
+curve(f_tan(-6,x),-9,-3,lwd=2,col="blue",add=TRUE)
+grid(NULL,NULL,col="black")
+```
+
+# Ejemplo: Identificar cualquier máximo y mínimo local y puntos de inflexión de la función 
+
+$$f(x)=\frac{x^3}{3}-3x^2+8x+2$$
+```{r}
+
+library(rootSolve)
+f<-function(x){x^3/3-3*x^2+8*x +2}
+f_p<-Deriv(f)
+f_pp<-Deriv(f,n=2)
+root_deriv<-uniroot.all(f_p,c(0,5))
+root_deriv2<-uniroot.all(f_pp,c(0,5))
+root_deriv
+f(root_deriv)
+f_pp(root_deriv)
+root_deriv2
+f(root_deriv2)
+```
+# Derivadas parciales 
+
+```{r}
+library(Deriv)
+
+# Ejemplo 1: f(x, y) = x^2 + y^2
+f1 <- function(x, y) x^2 + y^2
+
+# Derivada parcial con respecto a x
+df1_dx <- Deriv(f1, "x")
+df1_dx
+# function (x, y) 
+# 2 * x
+
+# Derivada parcial con respecto a y
+df1_dy <- Deriv(f1, "y")
+df1_dy
+# function (x, y) 
+# 2 * y
+
+# Ejemplo 2: f(x, y) = x^3 * y + sin(x)
+f2 <- function(x, y) x^3 * y + sin(x)
+
+df2_dx <- Deriv(f2, "x")
+df2_dx
+# function (x, y) 
+# 3 * x^2 * y + cos(x)
+
+df2_dy <- Deriv(f2, "y")
+df2_dy
+# function (x, y) 
+# x^3
+
+# Ejemplo 3: f(x, y, z) = x*y*z + x^2 + y^2 + z^2
+f3 <- function(x, y, z) x*y*z + x^2 + y^2 + z^2
+
+df3_dx <- Deriv(f3, "x")
+df3_dx
+# function (x, y, z) 
+# y * z + 2 * x
+
+df3_dy <- Deriv(f3, "y")
+df3_dy
+# function (x, y, z) 
+# x * z + 2 * y
+
+df3_dz <- Deriv(f3, "z")
+df3_dz
+# function (x, y, z) 
+# x * y + 2 * z
+```
+# También podemos evaluar estas derivadas en un punto:
+
+```{r}
+# Evaluar df1_dx en (x=2, y=3)
+df1_dx(2, 3)
+# [1] 4
+
+# Evaluar df2_dx en (x=1, y=2)
+df2_dx(1, 2)
+# [1] 3*1^2*2 + cos(1) = 6 + 0.5403023 = 6.540302
+
+# Evaluar df3_dx en (1,2,3)
+df3_dx(1, 2, 3)
+# [1] 2*3 + 2*1 = 6 + 2 = 8
+```
+
