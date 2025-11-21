@@ -1,0 +1,274 @@
+---
+title: "sesion4"
+author: "Antonio RM"
+date: "2025-11-20"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#instalación de paquetes
+```{r}
+#install.packages("writexl")
+```
+
+
+#librerias
+```{r}
+library(writexl)
+library(readxl)
+library(dplyr)
+library(DescTools)
+library(ggplot2)
+```
+
+```{r}
+dt <- read_excel("C:/Users/anton/Desktop/base_de datos_madres_fumadoras.xlsx")
+```
+
+```{r}
+dt
+```
+
+#Crear variable o columna nueva
+```{r}
+dt <- dt %>% mutate(clasi = cut(bwt,
+                                breaks = c(-Inf, 100, 140, Inf),
+                                labels= c("Liviano", "Aceptable", "Sano"),
+                                include.lowest =TRUE))
+```
+
+#tabla de frecuencia
+```{r}
+dt %>% pull(clasi) %>% 
+  table()
+```
+
+#tabla de frecuencia relativa
+```{r}
+dt %>% pull(clasi) %>% 
+  table() %>% 
+prop.table() %>% 
+  round(digits = 3)
+```
+
+#tabla de contingencia
+```{r}
+dt %>% select(smoke, clasi) %>% 
+  table() %>% 
+  prop.table()
+```
+
+#medidas de tendencia central
+```{r}
+mean(dt$weight, na.rm = TRUE)
+```
+
+```{r}
+Mode(dt$weight, na.rm = TRUE)
+```
+
+```{r}
+median(dt$weight, na.rm = TRUE)
+```
+
+#medidas de dispersión
+```{r}
+var(dt$bwt)
+```
+
+```{r}
+sd(dt$bwt)
+```
+
+#cuartiles
+```{r}
+quantile(dt$bwt)
+```
+
+```{r}
+quantile(dt$bwt, probs = c(0.20, 0.40, 0.60, 0.80))
+```
+
+#tabla 
+```{r}
+dt %>% summarise(media_peso = mean(bwt),
+                 varianza_peso = var(bwt),
+                 desvi_peso = sd(bwt),
+                 Q1 = quantile(bwt, probs = 0.25),
+                 D4 = quantile(bwt, probs = 0.40),
+                 P80 = quantile(bwt, probs = 0.80))
+```
+
+#tabla agrupada
+```{r}
+dt %>% group_by(parity) %>% 
+summarise(media_peso = mean(bwt),
+                 varianza_peso = var(bwt),
+                 desvi_peso = sd(bwt),
+                 Q1 = quantile(bwt, probs = 0.25),
+                 D4 = quantile(bwt, probs = 0.40),
+                 P80 = quantile(bwt, probs = 0.80),
+                 n = n())
+```
+
+
+```{r}
+dt %>% group_by(parity, smoke) %>% 
+summarise(media_peso = mean(bwt),
+                 varianza_peso = var(bwt),
+                 desvi_peso = sd(bwt),
+                 Q1 = quantile(bwt, probs = 0.25),
+                 D4 = quantile(bwt, probs = 0.40),
+                 P80 = quantile(bwt, probs = 0.80),
+                 n = n())
+```
+
+#histogramas
+```{r}
+ggplot(dt, aes(x = bwt))+
+  geom_histogram(bins = 10)+
+  labs(title = "Histograma del peso de los bebes",
+       x = "Peso",
+       y = "Frecuencia")
+```
+
+```{r}
+ggplot(dt, aes(x = bwt))+
+  geom_histogram(bins = 10,
+                 fill = "skyblue",
+                 colour = "darkblue",
+                 alpha = 0.7)+
+  labs(title = "Histograma del peso de los bebes",
+       x = "Peso",
+       y = "Frecuencia")
+```
+
+#la curva de densidad
+```{r}
+ggplot(dt, aes(x = bwt))+
+  geom_histogram(aes(y = after_stat(density)),
+                 bins = 10,
+                 fill = "skyblue",
+                 colour = "darkblue",
+                 alpha = 0.7)+
+  geom_density(colour = "red",
+               lwd = 1)+
+  labs(title = "Histograma del peso de los bebes",
+       x = "Peso",
+       y = "Frecuencia")
+```
+
+#linea de la media
+```{r}
+ggplot(dt, aes(x = bwt))+
+  geom_histogram(aes(y = after_stat(density)),
+                 bins = 10,
+                 fill = "skyblue",
+                 colour = "darkblue",
+                 alpha = 0.7)+
+  geom_density(colour = "red",
+               lwd = 1)+
+  geom_vline(
+    aes(xintercept = mean(bwt, na.rm = TRUE)),
+    colour = "darkgreen",
+    linetype = "dashed",
+    lwd = 1
+  )+
+  labs(title = "Histograma del peso de los bebes",
+       x = "Peso",
+       y = "Frecuencia")
+```
+
+```{r}
+ggplot(dt, aes(x = bwt))+
+  geom_histogram(aes(y = after_stat(density)),
+                 bins = 10,
+                 fill = "skyblue",
+                 colour = "darkblue",
+                 alpha = 0.7)+
+  geom_density(colour = "red",
+               lwd = 1)+
+  geom_vline(
+    aes(xintercept = mean(bwt, na.rm = TRUE)),
+    colour = "darkgreen",
+    linetype = "dashed",
+    lwd = 1
+  )+
+  labs(title = "Histograma del peso de los bebes",
+       subtitle = "Histograma con curva de densidad y media",
+       x = "Peso",
+       y = "Frecuencia")+
+  theme_minimal()+
+  theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+        plot.subtitle = element_text(hjust = 0.5, size = 12))
+```
+
+#boxplot
+```{r}
+boxplot(dt$bwt, las = 1, col = "darkorchid1",
+        ylab = "Peso del bebé (onzas)")
+```
+
+#boxplot horizantal
+```{r}
+boxplot(dt$bwt, las = 1, col = "darkorchid1",
+        horizontal = TRUE,
+        xlab = "Peso del bebé (onzas)")
+```
+
+#variable peso de bebés y variable smoke
+```{r}
+boxplot(dt$bwt ~ dt$smoke, las=1)
+```
+
+
+```{r}
+boxplot(dt$bwt ~ dt$smoke, las=1,
+        col=c("dodgerblue", "hotpink2"),
+              main = "Peso del bebé dado la condición de fumar",
+              xlab ="¿La madre fuma?",
+              ylab = "Peso (onzas)")
+```
+
+
+```{r}
+dt$fuma <- ifelse(dt$smoke=="Not", "NO", "Si")
+```
+
+```{r}
+boxplot(dt$bwt ~ dt$fuma, las=1,
+        col=c("dodgerblue", "hotpink2"),
+              main = "Peso del bebé dado la condición de fumar",
+              xlab ="¿La madre fuma?",
+              ylab = "Peso (onzas)")
+```
+
+
+```{r}
+plot(x=dt$weight, y=dt$bwt,
+     xlab = "Peso de la madre en libras",
+     ylab = "Peso del bebé en onzas", las= 1)
+```
+
+```{r}
+dt2 <- na.omit(dt)
+
+plot(x=dt2$weight, y=dt2$bwt, pch=20, las=1,
+     xlab = "Peso de la madre en libras",
+     ylab = "Peso del bebé en onzas",
+     col = as.factor(dt2$smoke))
+
+legend("bottomright", legend= c("No", "Si"),
+       pch = 20, col= 1:2)
+```
+
+```{r}
+plot(dt$age, dt$weight, pch = 20, col = "tomato", las =1,
+     xlab = "Edad de la madre",
+     ylab = "Peso de la madre")
+```
+
+
