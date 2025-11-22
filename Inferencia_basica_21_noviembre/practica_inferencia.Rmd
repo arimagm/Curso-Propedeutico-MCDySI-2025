@@ -1,0 +1,51 @@
+---
+title: "Practica de inferencia"
+author: "María Guzmán Martínez"
+date: "2025-11-21"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      error = FALSE,
+                      message = FALSE,
+                      warning = FALSE)
+```
+
+```{r}
+library(tinytex); library(ggplot2); library(tidyverse) 
+library(dplyr)
+library(GGally) 
+library(tinytex) 
+library(moments) # skewness library(DescTools) # Mode 
+
+#install.packages("moments")
+```
+
+
+# Gráficos de distribuciones
+
+
+Gráfico de la distribución normal estándar
+
+```{r}
+mu<-0
+sigma<-1
+curve(dnorm(x, mu, sigma), from=-15, to=15, col="blue", ylab = expression(f[X](x)))
+```
+
+Gráfico de la distribución t de student
+
+```{r}
+df<-1
+curve(dt(x,df), from=-15, to=15, col="blue", ylab = expression(f[X](x)))
+```
+
+
+```{r}
+set.seed(100) 
+dis_sim<-rbeta(10000, 5,5) # simétrica hist(dis_sim) 
+hist(dis_sim)
+skewness(dis_sim)
+```
+
